@@ -1,7 +1,47 @@
 import { DefaultAddressCard } from "./DefaultAddressCard"
-import { OtherAddressCard } from "./OtherAddressCard"
+import axios from "axios"
+import Razorpay from "razorpay"
 
 export const AddressBody=()=>{
+
+  const handlePayment = async (amount) => {
+    try {
+      const { data: { order } } = await axios.post("http://localhost:8000/api/payment/checkout", { amount });
+      const { data: { key } } = await axios.get("http://localhost:8000/api/payment/getKey");
+      console.log(order);
+  
+      const options = {
+        key: key,
+        amount: order.amount,
+        currency: "INR",
+        name: "Myntra",
+        description: "Test Transaction",
+        image: "https://upload.wikimedia.org/wikipedia/commons/b/bc/Myntra_Logo.png",
+        order_id: order.id,
+        callback_url: "https://localhost:8000/api/payment/verify", // Update with your actual domain
+        prefill: {
+          name: "sonu meena", // Hardcoded for now, replace with actual name
+          email: "kumarsonu123karauli@gmail.com", // Hardcoded for now, replace with actual email
+          contact: "9352693771", // Hardcoded for now, replace with actual mobile number
+        },
+        notes: {
+          address: "Razorpay Corporate Office"
+        },
+        theme: {
+          color: "#ff3f6c"
+        }
+      };
+      
+      const razor = new window.Razorpay(options);
+      razor.open();
+    } catch (error) {
+      console.error("Error handling payment:", error);
+      // Handle error
+    }
+  };
+  
+
+
   return <div className="w-9/12  mx-auto h-screen flex gap-6">
     <div className="w-7/12 mt-6 flex flex-col gap-2 border-black">
       <div className="flex justify-between">
@@ -12,7 +52,7 @@ export const AddressBody=()=>{
         <div style={{fontSize:"12px"}} className="text-gray-500 font-bold">DEFAULT ADDRESS</div>
         <div><DefaultAddressCard></DefaultAddressCard></div>
         <div style={{fontSize:"12px"}} className="text-gray-500 font-bold">OTHER ADDRESS</div>
-        <div><OtherAddressCard></OtherAddressCard></div>
+        <div><DefaultAddressCard></DefaultAddressCard></div>
       </div>
       <div className="border  py-6 px-4">
       <button className="font-semibold text-pink-500">+ Add New Address</button>
@@ -74,7 +114,7 @@ export const AddressBody=()=>{
                 <p>Total Amount</p>
                 <p>₹923</p>
               </div>
-              <button className="bg-pink-500 w-full text-white px-4 py-3 font-semibold text-sm">PLACE ORDER</button>
+              <button className="bg-pink-500 w-full text-white px-4 py-3 font-semibold text-sm" onClick={()=>handlePayment(50)}>PLACE ORDER</button>
             </div>
       </div>
       </div>

@@ -1,18 +1,21 @@
-import express from "express"
+import express, { urlencoded } from "express"
 const app = express();
 import cors from "cors"
 import authRoutes from "./routes/authRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js"
 import productRoutes from "./routes/productRoutes.js"
+import paymentRoutes from "./routes/paymentRoutes.js"
 import connectToMongodb from "./db.js";
 import cookieParser from "cookie-parser";
 
 app.use(express.json());
 app.use(cors());
+app.use(urlencoded({extended:true}));
 app.use(cookieParser());
 
 app.use("/api/users", authRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/payment", paymentRoutes);
 app.use("/api/admin",adminRoutes)
 
 

@@ -23,3 +23,15 @@ export const ProductSchema = zod.object({
   countInStock:zod.number()
 })
 
+
+export const AddressSchema = zod.object({
+  fullName:zod.string(),
+  mobileNumber:zod.string(),
+  pinCode:zod.number(),
+  address:zod.string(),
+  town:zod.string(),
+  city:zod.string(),
+  state:zod.string(),
+  isHome:zod.boolean(),
+  isDefaultAddress:zod.boolean()
+})

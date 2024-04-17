@@ -86,6 +86,7 @@ export const createProduct = async (req, res, next) => {
     next(error);
   }
 };
+
 export const updateProduct = async (req, res, next) => {
   const productPayload = req.body;
   const parsedPayload = ProductSchema.safeParse(productPayload);
@@ -130,6 +131,7 @@ export const updateProduct = async (req, res, next) => {
     next(error);
   }
 };
+
 export const deleteProduct = async (req, res, next) => {
   try {
     const { id: productId } = req.params;

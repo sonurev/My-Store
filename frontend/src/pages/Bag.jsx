@@ -7,6 +7,7 @@ import downarrow from "../assets/downarrow.svg";
 import offer from "../assets/offer.svg";
 import coupon from "../assets/coupon.svg";
 import { OrderCard } from "../components/OrderCard";
+import { BagFooter } from "../components/BagFooter";
 
 export const Bag = () => {
   const navigate = useNavigate();
@@ -207,6 +208,9 @@ export const Bag = () => {
           </div>
         </div>
       )}
+      <div>
+        <BagFooter></BagFooter>
+      </div>
     </div>
   );
 };

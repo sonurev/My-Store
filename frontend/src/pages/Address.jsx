@@ -1,5 +1,6 @@
 import { Bagbar } from "../components/Bagbar";
 import { AddressBody } from "../components/AddressBody";
+import { BagFooter } from "../components/BagFooter";
 export const Address = () => {
   return (
     <div className="">
@@ -8,6 +9,9 @@ export const Address = () => {
       </div>
       <div className="mt-20">
         <AddressBody></AddressBody>
+      </div>
+      <div>
+        <BagFooter></BagFooter>
       </div>
     </div>
   );
