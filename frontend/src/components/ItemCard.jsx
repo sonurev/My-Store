@@ -49,13 +49,13 @@ export const ItemCard = ({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div>
+        <div className="">
           <div>
             <img src={imagelink} alt="" className="-z-10" />
           </div>
-          <div className="absolute w-full -bottom-20 ">
+          <div className="absolute shadow-md w-full -bottom-20 ">
           {isHovered ? (
-            <div className="bg-white   w-full h-auto py-2 px-3">
+            <div className="bg-white  w-full h-auto py-2 px-3">
               <button
                 onClick={addwishlistItem}
                 className="flex items-center gap-3 border border-black w-full justify-center"
@@ -73,7 +73,7 @@ export const ItemCard = ({
               <div className="text-sm text-gray-900">{description}</div>
             </div>
           )}
-          <div className="px-3 pt-2 mb-1">
+          <div className="px-3  pt-2 mb-1">
             <div className="flex items-center gap-1 mt-1">
               <div className="text-sm font-semibold">Rs.{currentPrice}</div>
               <div

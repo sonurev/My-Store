@@ -1,11 +1,7 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const addressSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: 'User'
-  },
+// Define the schema for an individual address within the array
+const addressDetailSchema = new mongoose.Schema({
   fullName: {
     type: String,
     required: true
@@ -14,7 +10,7 @@ const addressSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 10,
-    unique: true
+    unique: true // Be careful with unique here, it might not behave as expected in subdocuments
   },
   pinCode: {
     type: Number,
@@ -45,10 +41,19 @@ const addressSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
     default: false
-  }
+  },
+}, { _id: true }); // Include _id if you need a unique identifier for each address
 
-})
+// Define the main address schema
+const addressSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User'
+  },
+  addresses: [addressDetailSchema] // Use the addressDetailSchema for addresses array
+});
 
-const Address = mongoose.model("Address", addressSchema);
+const Address = mongoose.model('Address', addressSchema);
 
 export default Address;

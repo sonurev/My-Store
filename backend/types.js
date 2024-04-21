@@ -35,3 +35,8 @@ export const AddressSchema = zod.object({
   isHome:zod.boolean(),
   isDefaultAddress:zod.boolean()
 })
+
+export const WishlistSchema = zod.object({
+  userId:zod.string(),
+  productId:zod.string()
+})

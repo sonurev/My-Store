@@ -1,71 +1,61 @@
 import { AddressSchema } from "../types.js";
 import Address from "../models/address.models.js";
+import mongoose from "mongoose"
 
 const getAddress = async (req, res, next) => {
-
   try {
-    const { userId } = req.params; // Assuming the user ID is passed in the route params as 'userId'
+    const { userId } = req.params;  // Extracting userId from params
+    const userAddress = await Address.findOne({ user: userId });
 
-    const addresses = await Address.find({ userId });
-
-    if (!addresses || addresses.length === 0) {
-      res.status(404);
-      throw new Error('No addresses found for the user!');
+    if (!userAddress) {
+      return res.status(404).json({ message: 'No addresses found for the user!' });
     }
 
-    res.status(200).json(addresses);
+    res.status(200).json(userAddress.addresses);
   } catch (error) {
-    next(error);
+    console.log("error in get Address" + error);
   }
 };
+
 
 
 
 const createAddress = async (req, res, next) => {
-
-
   const addressPayload = req.body;
-  const parsedPayload = AddressSchema.safeParse(addressPayload);
+  const { userId } = req.params;
 
+
+  if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ message: 'Invalid or missing user ID.' });
+  }
+
+  const parsedPayload = AddressSchema.safeParse(addressPayload);
   if (!parsedPayload.success) {
-    res.status(411).json({
-      msg: "you sent the wrong inputs"
-    })
-    return;
+    return res.status(400).json({ message: "Invalid address data provided." });
   }
 
   try {
-    const { fullName,
-      mobileNumber,
-      pinCode,
-      address,
-      town,
-      city,
-      state,
-      isHome,
-      isDefaultAddress } =
-      req.body;
-    console.log(req.file);
-    const newAddress = new Address({
-      user: req.user._id,
-      fullName,
-      mobileNumber,
-      pinCode,
-      address,
-      town,
-      city,
-      state,
-      isHome,
-      isDefaultAddress
-    });
-    const createdAddress = await newAddress.save();
+    const userAddress = await Address.findOne({ user: userId });
 
-    res.status(200).json({ message: 'Address created', createdAddress });
+    if (userAddress) {
+      userAddress.addresses.push(addressPayload);
+      await userAddress.save();
+      res.status(201).json({ message: 'Address added to your address book', address: userAddress });
+    } else {
+      const newAddressBook = new Address({
+        user: userId,
+        addresses: [addressPayload]
+      });
+      const createdAddressBook = await newAddressBook.save();
+      res.status(201).json({ message: 'Address book created with the new address', address: createdAddressBook });
+    }
   } catch (error) {
-    next(error);
+    console.error("Error in createAddress:", error);
+    res.status(500).json({ message: "Failed to create address due to server error" });
   }
-
 };
+
+
 
 export {
   createAddress,

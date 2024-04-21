@@ -14,9 +14,9 @@ router.post("/login",login);
 
 router.post("/logout",logout);
 
-router.get("/address/:id",protectRoute,getAddress);
+router.get("/address/:userId",protectRoute,getAddress);
 
-router.post("/address",protectRoute,createAddress);
+router.post("/address/:userId",protectRoute,createAddress);
 
 router.post("/wishlist",protectRoute,createWishItem);
 
