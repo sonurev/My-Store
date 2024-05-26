@@ -1,10 +1,9 @@
-import { useRecoilState } from "recoil";
-import { wishlistState } from "../store/atoms";
 import { BagCard } from "./BagCard";
+import { useWishlist } from "../hooks";
 
 export const WishListBody = ()=>{
 
-  const [wishlist, setWishlist] = useRecoilState(wishlistState);
+  const {wishlist,loading }= useWishlist();
   
   const  wishlistFunction=(wishlist)=>{
     console.log("inside function")
@@ -15,7 +14,7 @@ export const WishListBody = ()=>{
   wishlistFunction(wishlist);
 
   return <div className="">
-         { wishlist.length !== 0 ? (
+         { loading===false ? (
         <div className="flex flex-wrap gap-8">
           { wishlist.map((item) => (
               <BagCard
@@ -35,7 +34,13 @@ export const WishListBody = ()=>{
       ) : (
         <div>
           <div className="mx-auto flex items-center w-screen h-screen justify-center">
-            <div className="font-bold text-3xl">wishlist is empty</div>
+            <div className="flex flex-wrap h-screen">
+              <div className="h-72 bg-gray-500 rounded-md"></div>
+              <div className="h-72 bg-gray-500 rounded-md"></div>
+              <div className="h-72 bg-gray-500 rounded-md"></div>
+              <div className="h-72 bg-gray-500 rounded-md"></div>
+              <div className="h-72 bg-gray-500 rounded-md"></div>
+            </div>
           </div>
         </div>
       )}

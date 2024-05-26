@@ -1,5 +1,6 @@
 import { Appbar } from "../components/Appbar";
 import { WishListBody } from "../components/WishListBody";
+import { Footbar } from "../components/Footbar";
 
 export const Wishlist = () => {
   return (
@@ -7,8 +8,11 @@ export const Wishlist = () => {
       <div className="fixed top-0 w-full">
         <Appbar />
       </div>
-      <div className="flex flex-1 justify-center items-center">
+      <div className="flex mt-24  justify-center items-center">
         <WishListBody />
+      </div>
+      <div className="">
+        <Footbar></Footbar>
       </div>
     </div>
   );

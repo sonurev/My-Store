@@ -4,7 +4,7 @@ import facebook from "../assets/facebook.svg"
 import youtube from "../assets/youtube.svg"
 import twitter from "../assets/twitter.svg"
 export const Footbar = ()=>{
-  return <div className="w-screen mt-20 border-black h-80 flex items-center">
+  return <div className=" mt-20 border-black h-80 flex items-center">
     <div className="w-9/12 mx-auto flex gap-20" style={{backgroundColor:"#FAFBFC"}}>
       <div>
         

@@ -4,10 +4,10 @@ import { useProducts } from "../hooks";
 export const Body = () => {
   const { loading, products } = useProducts();
   return (
-    <div>
+    <div >
       { loading ==false ?
       <div className="m-5">
-        <div className="w-10/12 mx-auto flex flex-wrap gap-8">
+        <div className="w-10/12  mx-auto flex flex-wrap gap-8">
           {products.map((item) => (
             <ItemCard
               key={item._id}

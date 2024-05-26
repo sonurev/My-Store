@@ -20,7 +20,7 @@ router.post("/address/:userId",protectRoute,createAddress);
 
 router.post("/wishlist",protectRoute,createWishItem);
 
-router.get("/wishlist",protectRoute,getWishlistItems)
+router.get("/wishlist/:userId",protectRoute,getWishlistItems)
 
 
 export default router;

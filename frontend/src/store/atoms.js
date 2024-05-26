@@ -14,3 +14,8 @@ export const baglistState = atom({
   key:"BaglistState",
   default:[]
 })
+
+export const userDetailsState = atom({
+  key:"UserDetailsState",
+  default:[]
+})

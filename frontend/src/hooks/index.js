@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { productsState } from "../store/atoms";
+import { productsState, wishlistState } from "../store/atoms";
 
 export const useProducts = () => {
     
@@ -26,3 +26,29 @@ export const useProducts = () => {
         products
     };
 };
+
+
+export const useWishlist = ()=>{
+
+    const[loading,setLoading]=useState(true);
+    const[wishlist,setWishlist]=useRecoilState(wishlistState);
+
+    useEffect(() => {
+        axios.get("http://localhost:8000/api/wishlist/")
+            .then(response => {
+                console.log(response.data);
+                setWishlist(response.data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching wishlist:", error);
+                setLoading(false);
+            });
+    }, []);
+
+    return {
+        loading,
+        wishlist
+    };
+ 
+}

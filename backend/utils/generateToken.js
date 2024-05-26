@@ -12,6 +12,8 @@ const generateTokenAndSetCookie = (userId, res) => {
     secure: true, // Only send cookie over HTTPS (ensure you have HTTPS enabled)
     sameSite: "strict", // Prevent CSRF attacks (Cross-Site Request Forgery)
   });
+
+  return token;
 };
 
 export default generateTokenAndSetCookie;
